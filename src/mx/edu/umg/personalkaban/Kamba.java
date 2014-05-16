@@ -6,6 +6,9 @@
 
 package mx.edu.umg.personalkaban;
 
+import javafx.concurrent.Task;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Cruz
@@ -51,10 +54,11 @@ public class Kamba extends javax.swing.JFrame {
         jProgressBar1 = new javax.swing.JProgressBar();
         jComboBox2 = new javax.swing.JComboBox();
         jTextField4 = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(255, 255, 255));
         setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        setIconImages(null);
         setName("Task"); // NOI18N
 
         label1.setText("Title");
@@ -88,13 +92,25 @@ public class Kamba extends javax.swing.JFrame {
 
         jRadioButton3.setLabel("No");
 
-        jButton1.setLabel("Crear");
+        jButton1.setText("Agregar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Alta", "Media", "Baja" }));
         jComboBox2.setName("Priority"); // NOI18N
         jComboBox2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox2ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Cancelar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -146,8 +162,14 @@ public class Kamba extends javax.swing.JFrame {
                                 .addComponent(jRadioButton3)
                                 .addGap(79, 79, 79)
                                 .addComponent(jButton1)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton2)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -175,7 +197,7 @@ public class Kamba extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(17, 17, 17)
                         .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
@@ -205,7 +227,9 @@ public class Kamba extends javax.swing.JFrame {
                         .addComponent(jLabel8)
                         .addComponent(jRadioButton1)
                         .addComponent(jRadioButton3))
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1)
+                        .addComponent(jButton2)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -214,6 +238,7 @@ public class Kamba extends javax.swing.JFrame {
         jLabel1.getAccessibleContext().setAccessibleDescription("");
         jRadioButton1.getAccessibleContext().setAccessibleName("a");
         jRadioButton3.getAccessibleContext().setAccessibleName("a");
+        jButton2.getAccessibleContext().setAccessibleName("Cancelar");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -225,6 +250,31 @@ public class Kamba extends javax.swing.JFrame {
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showConfirmDialog(null, "Desea Agregar los datos");
+        String titulo = txtTitle.getText();
+        
+        if("".equalsIgnoreCase(titulo.trim)){
+        JOptionPane.showMessageDialog(null, "Titulo Vacio");
+        Task tarea = new Task(titulo) {
+
+            @Override
+            protected Object call() throws Exception {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        };
+        tarea.setDescription(txtDescription.getText());
+        Program.dashboard.add(tarea);
+        
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -255,6 +305,7 @@ public class Kamba extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new Kamba().setVisible(true);
             }
@@ -263,6 +314,7 @@ public class Kamba extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -285,4 +337,8 @@ public class Kamba extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField9;
     private java.awt.Label label1;
     // End of variables declaration//GEN-END:variables
+
+    private void Close() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
